@@ -29,6 +29,11 @@
     "require-dev": {
         "phpunit/phpunit": "^9.5"
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "scripts": {
         "test": "phpunit --testdox",
         "testsuite": "phpdbg -qrr vendor/bin/phpunit"

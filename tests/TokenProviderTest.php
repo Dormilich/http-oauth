@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests;
+
 use Dormilich\HttpClient\Exception\RequestException;
 use Dormilich\HttpOauth\TokenClientInterface;
 use Dormilich\HttpOauth\TokenInterface;
@@ -22,25 +24,17 @@ class TokenProviderTest extends TestCase
     {
         $date = is_int($minutes) ? date_create("+{$minutes} minutes") : null;
 
-        $stub = $this->createStub(TokenInterface::class);
-        $stub
-            ->method('isExpired')
-            ->willReturn($minutes < 0);
-        $stub
-            ->method('getExpiration')
-            ->willReturn($date);
-
-        return $stub;
+        return $this->createConfiguredMock(TokenInterface::class, [
+            'isExpired' => $minutes < 0,
+            'getExpiration' => $date,
+        ]);
     }
 
     private function uri()
     {
-        $stub = $this->createStub(UriInterface::class);
-        $stub
-            ->method('getHost')
-            ->willReturn('example.com');
-
-        return $stub;
+        return $this->createConfiguredMock(UriInterface::class, [
+            'getHost' => 'example.com',
+        ]);
     }
 
     /**

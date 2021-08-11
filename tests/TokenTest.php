@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests;
+
 use Dormilich\HttpOauth\Token;
 use Dormilich\HttpOauth\TokenInterface;
 use PHPUnit\Framework\TestCase;
