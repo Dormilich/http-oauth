@@ -3,14 +3,14 @@
 namespace Dormilich\HttpOauth\Decoder;
 
 use Dormilich\HttpClient\Decoder\DecoderInterface;
-use Dormilich\HttpClient\Transformer\TransformerInterface;
+use Dormilich\HttpClient\Transformer\DataDecoderInterface;
 use Psr\Http\Message\ResponseInterface;
 
 trait TransformationTrait
 {
-    private TransformerInterface $transformer;
+    private DataDecoderInterface $transformer;
 
-    protected function setTransformer(TransformerInterface $transformer)
+    protected function setTransformer(DataDecoderInterface $transformer)
     {
         $this->transformer = $transformer;
     }

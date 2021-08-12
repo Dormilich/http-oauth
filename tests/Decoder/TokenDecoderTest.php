@@ -116,4 +116,47 @@ class TokenDecoderTest extends TestCase
         $this->assertSame('bearer', $token->getType());
         $this->assertEquals(['foo','bar'], $token->getScope());
     }
+
+    /**
+     * @test
+     */
+    public function calculate_expiration_without_date_header()
+    {
+        $response = $this->createStub(ResponseInterface::class);
+        $response
+            ->method('getBody')
+            ->willReturn($this->body());
+        $response
+            ->method('hasHeader')
+            ->willReturnMap([['Date', false]]);
+
+        $decoder = new TokenDecoder();
+        $token = $decoder->unserialize($response);
+
+        $this->assertFalse($token->isExpired());
+        $this->assertNotNull($token->getExpiration());
+    }
+
+    /**
+     * @test
+     */
+    public function ignore_invalid_date_header()
+    {
+        $response = $this->createStub(ResponseInterface::class);
+        $response
+            ->method('getBody')
+            ->willReturn($this->body());
+        $response
+            ->method('getHeader')
+            ->willReturnMap([['Date', ['schnuddeldiwutz']]]);
+        $response
+            ->method('hasHeader')
+            ->willReturnMap([['Date', true]]);
+
+        $decoder = new TokenDecoder();
+        $token = $decoder->unserialize($response);
+
+        $this->assertFalse($token->isExpired());
+        $this->assertNotNull($token->getExpiration());
+    }
 }

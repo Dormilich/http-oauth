@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Dormilich/http-client.git",
-                "reference": "df761c8a37eec5d4c95504a915ee5eb9a6f8db5e"
+                "reference": "ba59a3d8f94a920c654d4a30ba959e26b700bd42"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Dormilich/http-client/zipball/df761c8a37eec5d4c95504a915ee5eb9a6f8db5e",
-                "reference": "df761c8a37eec5d4c95504a915ee5eb9a6f8db5e",
+                "url": "https://api.github.com/repos/Dormilich/http-client/zipball/ba59a3d8f94a920c654d4a30ba959e26b700bd42",
+                "reference": "ba59a3d8f94a920c654d4a30ba959e26b700bd42",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +54,7 @@
                 "issues": "https://github.com/Dormilich/http-client/issues",
                 "source": "https://github.com/Dormilich/http-client/tree/main"
             },
-            "time": "2021-08-06T08:12:22+00:00"
+            "time": "2021-08-12T09:47:43+00:00"
         },
         {
             "name": "psr/http-client",

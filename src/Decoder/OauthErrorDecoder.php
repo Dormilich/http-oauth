@@ -4,8 +4,7 @@ namespace Dormilich\HttpOauth\Decoder;
 
 use Dormilich\HttpClient\Decoder\ContentTypeTrait;
 use Dormilich\HttpClient\Decoder\DecoderInterface;
-use Dormilich\HttpClient\Transformer\JsonTransformer;
-use Dormilich\HttpClient\Transformer\TransformerInterface;
+use Dormilich\HttpClient\Transformer\JsonDecoder;
 use Dormilich\HttpClient\Utility\StatusMatcher;
 use Dormilich\HttpOauth\Exception\AuthorisationException;
 use Psr\Http\Message\ResponseInterface;
@@ -24,7 +23,7 @@ class OauthErrorDecoder implements DecoderInterface
 
     public function __construct()
     {
-        $this->setTransformer(new JsonTransformer());
+        $this->setTransformer(new JsonDecoder());
     }
 
     /**

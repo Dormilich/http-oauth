@@ -20,7 +20,6 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriInterface;
 
 use function base64_encode;
-use function implode;
 use function http_build_query;
 
 /**
