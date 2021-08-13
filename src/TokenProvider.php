@@ -3,6 +3,7 @@
 namespace Dormilich\HttpOauth;
 
 use Dormilich\HttpClient\Exception\RequestException;
+use Dormilich\HttpOauth\Exception\CredentialsNotFoundException;
 use Psr\Http\Message\UriInterface;
 use Psr\SimpleCache\CacheException;
 use Psr\SimpleCache\CacheInterface;
@@ -33,8 +34,7 @@ class TokenProvider implements TokenProviderInterface
      */
     public function getToken(UriInterface $uri): TokenInterface
     {
-        $cache_key = 'dormilich-oauth-' . $uri->getHost();
-
+        $cache_key = $this->getCacheKey($uri);
         $token = $this->fetchToken($cache_key);
 
         if (empty($token)) {
@@ -47,6 +47,16 @@ class TokenProvider implements TokenProviderInterface
         $this->storeToken($cache_key, $token);
 
         return $token;
+    }
+
+    /**
+     * @param UriInterface $uri
+     * @return string
+     * @throws CredentialsNotFoundException
+     */
+    private function getCacheKey(UriInterface $uri): string
+    {
+        return 'dormilich-oauth-' . $this->client->getCredentialsId($uri);
     }
 
     /**

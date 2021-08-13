@@ -63,12 +63,15 @@ class TokenProviderTest extends TestCase
         $client
             ->expects($this->never())
             ->method('refreshToken');
+        $client
+            ->method('getCredentialsId')
+            ->willReturn('07801ada-9767-4795-8625-657d74d2a120');
 
         $cache = $this->createMock(CacheInterface::class);
         $cache
             ->expects($this->once())
             ->method('get')
-            ->with($this->identicalTo('dormilich-oauth-example.com'))
+            ->with($this->identicalTo('dormilich-oauth-07801ada-9767-4795-8625-657d74d2a120'))
             ->willReturn($token);
 
         $uri = $this->uri();
@@ -96,18 +99,21 @@ class TokenProviderTest extends TestCase
         $client
             ->expects($this->never())
             ->method('refreshToken');
+        $client
+            ->method('getCredentialsId')
+            ->willReturn('07801ada-9767-4795-8625-657d74d2a120');
 
         $cache = $this->createMock(CacheInterface::class);
         $cache
             ->expects($this->once())
             ->method('get')
-            ->with($this->identicalTo('dormilich-oauth-example.com'))
+            ->with($this->identicalTo('dormilich-oauth-07801ada-9767-4795-8625-657d74d2a120'))
             ->willReturn(null);
         $cache
             ->expects($this->once())
             ->method('set')
             ->with(
-                $this->identicalTo('dormilich-oauth-example.com'),
+                $this->identicalTo('dormilich-oauth-07801ada-9767-4795-8625-657d74d2a120'),
                 $this->identicalTo($token),
                 $this->identicalTo(600)
             )
@@ -140,18 +146,21 @@ class TokenProviderTest extends TestCase
         $client
             ->expects($this->never())
             ->method('refreshToken');
+        $client
+            ->method('getCredentialsId')
+            ->willReturn('07801ada-9767-4795-8625-657d74d2a120');
 
         $cache = $this->createMock(CacheInterface::class);
         $cache
             ->expects($this->once())
             ->method('get')
-            ->with($this->identicalTo('dormilich-oauth-example.com'))
+            ->with($this->identicalTo('dormilich-oauth-07801ada-9767-4795-8625-657d74d2a120'))
             ->willReturn($expired);
         $cache
             ->expects($this->once())
             ->method('set')
             ->with(
-                $this->identicalTo('dormilich-oauth-example.com'),
+                $this->identicalTo('dormilich-oauth-07801ada-9767-4795-8625-657d74d2a120'),
                 $this->identicalTo($token),
                 $this->identicalTo(600)
             )
@@ -187,18 +196,21 @@ class TokenProviderTest extends TestCase
                 $this->identicalTo($uri)
             )
             ->willReturn($token);
+        $client
+            ->method('getCredentialsId')
+            ->willReturn('07801ada-9767-4795-8625-657d74d2a120');
 
         $cache = $this->createMock(CacheInterface::class);
         $cache
             ->expects($this->once())
             ->method('get')
-            ->with($this->identicalTo('dormilich-oauth-example.com'))
+            ->with($this->identicalTo('dormilich-oauth-07801ada-9767-4795-8625-657d74d2a120'))
             ->willReturn($expired);
         $cache
             ->expects($this->once())
             ->method('set')
             ->with(
-                $this->identicalTo('dormilich-oauth-example.com'),
+                $this->identicalTo('dormilich-oauth-07801ada-9767-4795-8625-657d74d2a120'),
                 $this->identicalTo($token),
                 $this->identicalTo(600)
             )
@@ -227,6 +239,9 @@ class TokenProviderTest extends TestCase
         $client
             ->expects($this->never())
             ->method('refreshToken');
+        $client
+            ->method('getCredentialsId')
+            ->willReturn('07801ada-9767-4795-8625-657d74d2a120');
 
         $error = new CacheFailure();
         $cache = $this->createMock(CacheInterface::class);
@@ -266,6 +281,9 @@ class TokenProviderTest extends TestCase
             ->expects($this->once())
             ->method('refreshToken')
             ->willThrowException(new RequestException());
+        $client
+            ->method('getCredentialsId')
+            ->willReturn('07801ada-9767-4795-8625-657d74d2a120');
 
         $cache = $this->createStub(CacheInterface::class);
         $cache

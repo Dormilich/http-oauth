@@ -77,6 +77,20 @@ class TokenClientTest extends TestCase
     /**
      * @test
      */
+    public function get_client_identifier()
+    {
+        $uri = $this->createStub(UriInterface::class);
+        $http = $this->createStub(ClientInterface::class);
+        $rFac = $this->createStub(RequestFactoryInterface::class);
+        $sFac = $this->createStub(StreamFactoryInterface::class);
+        $client = new TokenClient($this->provider(), $http, $rFac, $sFac);
+
+        $this->assertIsString($client->getCredentialsId($uri));
+    }
+
+    /**
+     * @test
+     */
     public function request_new_token()
     {
         $expData['grant_type'] = 'client_credentials';

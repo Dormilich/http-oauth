@@ -3,6 +3,7 @@
 namespace Dormilich\HttpOauth;
 
 use Dormilich\HttpClient\Exception\RequestException;
+use Dormilich\HttpOauth\Exception\CredentialsNotFoundException;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -16,6 +17,7 @@ interface TokenClientInterface
      *
      * @param UriInterface $uri Resource target URI.
      * @return TokenInterface
+     * @throws CredentialsNotFoundException
      * @throws RequestException
      */
     public function requestToken(UriInterface $uri): TokenInterface;
@@ -26,7 +28,17 @@ interface TokenClientInterface
      * @param TokenInterface $token OAuth2 token.
      * @param UriInterface $uri Resource target URI.
      * @return TokenInterface
+     * @throws CredentialsNotFoundException
      * @throws RequestException
      */
     public function refreshToken(TokenInterface $token, UriInterface $uri): TokenInterface;
+
+    /**
+     * Get an identifier that can be associated with the access token, e.g. for caching.
+     *
+     * @param UriInterface $uri
+     * @return string
+     * @throws CredentialsNotFoundException
+     */
+    public function getCredentialsId(UriInterface $uri): string;
 }

@@ -9,6 +9,7 @@ use Dormilich\HttpOauth\Credentials\ClientCredentials;
 use Dormilich\HttpOauth\Credentials\CredentialsProviderInterface;
 use Dormilich\HttpOauth\Decoder\OauthErrorDecoder;
 use Dormilich\HttpOauth\Decoder\TokenDecoder;
+use Dormilich\HttpOauth\Exception\CredentialsNotFoundException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Client\NetworkExceptionInterface;
@@ -20,6 +21,7 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriInterface;
 
 use function base64_encode;
+use function hash_hmac;
 use function http_build_query;
 
 /**
@@ -96,11 +98,23 @@ class TokenClient implements TokenClientInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getCredentialsId(UriInterface $uri): string
+    {
+        $credentials = $this->provider->get($uri);
+        $id = $credentials->getClientId();
+        $url = $credentials->getTokenEndpoint();
+        return hash_hmac('md5', $url, $id);
+    }
+
+    /**
      * Request a new access token.
      *
      * @param array $data
      * @param UriInterface $uri
      * @return TokenInterface
+     * @throws CredentialsNotFoundException
      * @throws RequestException
      */
     private function submit(array $data, UriInterface $uri): TokenInterface
