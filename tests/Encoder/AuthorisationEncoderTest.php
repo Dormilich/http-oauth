@@ -96,11 +96,8 @@ class AuthorisationEncoderTest extends TestCase
     /**
      * @test
      */
-    public function oauth_request_fails_without_credentials()
+    public function missing_credentials_skip_authorisation()
     {
-        $this->expectException(RequestException::class);
-        $this->expectExceptionMessage('OAuth credentials missing');
-
         $uri = $this->createStub(UriInterface::class);
         $request = $this->createMock(RequestInterface::class);
         $request

@@ -4,7 +4,7 @@ namespace Dormilich\HttpOauth\Encoder;
 
 use Dormilich\HttpClient\Encoder\EncoderInterface;
 use Dormilich\HttpClient\Exception\RequestException;
-use Dormilich\HttpClient\ExceptionInterface;
+use Dormilich\HttpOauth\Exception\CredentialsNotFoundException;
 use Dormilich\HttpOauth\TokenProviderInterface;
 use Psr\Http\Message\RequestInterface;
 
@@ -45,12 +45,8 @@ class AuthorisationEncoder implements EncoderInterface
     {
         try {
             return $request->withHeader('Authorization', $this->getAuthorisation($request));
-        } catch (RequestException $e) {
-            throw $e;
-        } catch (ExceptionInterface $e) {
-            $exception = new RequestException($e->getMessage(), $e->getCode(), $e);
-            $exception->setRequest($request);
-            throw $exception;
+        } catch (CredentialsNotFoundException $e) {
+            return $request;
         }
     }
 
@@ -58,6 +54,7 @@ class AuthorisationEncoder implements EncoderInterface
      * @param RequestInterface $request
      * @return string
      * @throws RequestException
+     * @throws CredentialsNotFoundException
      */
     private function getAuthorisation(RequestInterface $request): string
     {

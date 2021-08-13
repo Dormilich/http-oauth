@@ -20,7 +20,7 @@ class ChainProvider implements CredentialsProviderInterface
     /**
      * @param CredentialsProviderInterface[] $providers
      */
-    public function __construct(array $providers = [])
+    public function __construct(iterable $providers = [])
     {
         foreach ($providers as $provider) {
             $this->add($provider);

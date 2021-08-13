@@ -29,7 +29,7 @@ class DomainProvider implements CredentialsProviderInterface
      * @return self
      * @throws InvalidUrlException
      */
-    public function add(ClientCredentials $credentials, array $hosts): self
+    public function add(ClientCredentials $credentials, iterable $hosts): self
     {
         foreach ($hosts as $host) {
             $key = $this->getHost($host);
